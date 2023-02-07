@@ -2,15 +2,17 @@ name: Beelder-Deploy-Pipeline
 
 permissions:
   id-token: write
-  contents: read
+  contents: read  #This is required for actions/checkout@v2
 
 on: 
   push:
     branches: [master]
 
 jobs:
-  my-job:
+  pull_request:
     runs-on: ubuntu-latest
+    env:
+      AWS_DEFAULT_REGION: us-east-1
     steps:
       - name: my-step
         run: echo "Hello World!"
