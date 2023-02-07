@@ -8,4 +8,12 @@ permissions:
   contents: read# This is required for actions/checkout@v2
 
 jobs:
+  pull_request:
+    runs-on: ubuntu-latest
+  env:
+    AWS_DEFAULT_REGION: us-east-1
   
+  steps:
+    - name: Some AWS commands
+      run: |
+        aws --version
