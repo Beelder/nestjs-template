@@ -14,5 +14,7 @@ jobs:
     env:
       AWS_DEFAULT_REGION: us-east-1
     steps:
-      - name: my-step
+      - name: my-step-1
         run: echo "Hello World!"
+      - name: my-step-2
+        run: echo "::add-mask::$AWS_DEFAULT_REGION"
