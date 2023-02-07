@@ -15,5 +15,5 @@ jobs:
   
   steps:
     - name: Some AWS commands
-      run: |
+      run: 
         aws --version
