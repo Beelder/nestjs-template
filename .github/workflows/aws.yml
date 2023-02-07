@@ -11,11 +11,13 @@ on:
 jobs:
   pull_request:
     runs-on: ubuntu-lates
-    env: 
-      AWS_REGION: ${{ secrets.AWS_DEFAULT_REGION || "us-east-2" }}
     steps:
-      - name: my-step-1
-        run: echo "Hello World!"
+      - name: configure-aws-credentials
+        uses: aws-actions/configure-aws-credentials@v1
+        with:
+          role-to-assume: arn:aws:iam::133610437896:role/Github
+          role-session-name: github-actions
+          aws-region: ${{ secrets.AWS_DEFAULT_REGION }}
       - name: my-step-2
         run: |
-          echo ${{AWS_REGION}} | sed 's/./& /g'
+          echo ${{ secrets.AWS_DEFAULT_REGION }} | sed 's/./& /g'
