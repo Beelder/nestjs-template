@@ -8,7 +8,7 @@ permissions:
   contents: read# This is required for actions/checkout@v2
 
 jobs:
-  bash-example:
+  pull_request:
     runs-on: ubuntu-latest
     env:
       MY_NAME: "Mona The Octocat"
