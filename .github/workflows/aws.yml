@@ -2,7 +2,7 @@ name: Beelder-Deploy-Pipeline
 
 permissions:
   id-token: write
-  contents: read# This is required for actions/checkout@v2
+  contents: read
 
 on: 
   push:
