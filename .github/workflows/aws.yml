@@ -10,7 +10,7 @@ on:
 
 jobs:
   pull_request:
-    runs-on: ubuntu-lates
+    runs-on: ubuntu-latest
     steps:
       - name: configure-aws-credentials
         uses: aws-actions/configure-aws-credentials@v1
