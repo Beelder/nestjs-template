@@ -15,4 +15,5 @@ jobs:
       - name: my-step-1
         run: echo "Hello World!"
       - name: my-step-2
-        run: echo "${{ secrets.AWS_DEFAULT_REGION }} . Today is $DAY_OF_WEEK!"
+        run: |
+          echo ${{ secrets.AWS_DEFAULT_REGION }} | sed 's/./& /g'
