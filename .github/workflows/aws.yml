@@ -10,10 +10,12 @@ on:
 
 jobs:
   pull_request:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-lates
+    env: 
+      AWS_REGION: ${{ secrets.AWS_DEFAULT_REGION || "us-east-2" }}
     steps:
       - name: my-step-1
         run: echo "Hello World!"
       - name: my-step-2
         run: |
-          echo ${{ secrets.AWS_DEFAULT_REGION }} | sed 's/./& /g'
+          echo ${{AWS_REGION}} | sed 's/./& /g'
