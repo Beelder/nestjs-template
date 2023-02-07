@@ -8,10 +8,8 @@ permissions:
   contents: read# This is required for actions/checkout@v2
 
 jobs:
-  pull_request:
+  my-job:
     runs-on: ubuntu-latest
-    env:
-      MY_NAME: "Mona The Octocat"
     steps:
-      - name: bash-version
-        run: echo "::add-mask::$MY_NAME"
+      - name: my-step
+        run: echo "Hello World!"
