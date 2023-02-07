@@ -8,11 +8,10 @@ permissions:
   contents: read# This is required for actions/checkout@v2
 
 jobs:
-  pull_request:
+  bash-example:
     runs-on: ubuntu-latest
-  env:
-    AWS_DEFAULT_REGION: us-east-1
-  
-  steps:
-      - name: aws version
-        run: aws --version
+    env:
+      MY_NAME: "Mona The Octocat"
+    steps:
+      - name: bash-version
+        run: echo "::add-mask::$MY_NAME"
