@@ -17,4 +17,4 @@ jobs:
       - name: my-step-1
         run: echo "Hello World!"
       - name: my-step-2
-        run: echo "::add-mask::$AWS_DEFAULT_REGION"
+        run: echo {{env.AWS_DEFAULT_REGION}}
