@@ -12,19 +12,33 @@ jobs:
     runs-on: ubuntu-latest
 
     env:
-    AWS_DEFAULT_REGION: us-east-1
+      AWS_DEFAULT_REGION: us-east-1
 
-    steps:
+   steps:
     - name: configureawscredentials
       uses: aws-actions/configure-aws-credentials@v1
       with:
         role-to-assume: arn:aws:iam::133610437896:role/Github
-        role-session-name: Github-Actions
+        role-session-name: github-actions
         aws-region: ${{secrets.AWS_DEFAULT_REGION}}
-
     - name: Checkout
       uses: actions/checkout@v2
 
-    - name: Some AWS commands
+    - name: Login to Amazon ECR
+      id: login-ecr
+      uses: aws-actions/amazon-ecr-login@v1
+
+    - name: Automatic Tagging of Releases
+      id: increment-git-tag
       run: |
-        aws --version
+        bash ./build/git_update.sh -v major
+
+    - name: Build, Tag, and Push the Image to Amazon ECR
+      id: build-image
+      env:
+        ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
+        ECR_REPOSITORY: nestjs-template
+        IMAGE_TAG: ${{ steps.increment-git-tag.outputs.git-tag }}
+      run: |
+        docker build -t $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG .
+        docker push $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG
