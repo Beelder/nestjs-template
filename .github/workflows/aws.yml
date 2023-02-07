@@ -1,44 +1,30 @@
-name: Beelder-Deploy-Pipeline
+name: Example pipeline
 on:
-  pull_request:
-    branches: [master]
+ pull_request:
+   branches: [master]
 
 permissions:
-  id-token: write
-  contents: read# This is required for actions/checkout@v2
+ id-token: write
+ contents: read# This is required for actions/checkout@v2
 
 jobs:
-  pull_request:
-    runs-on: ubuntu-latest
+ pull_request:
+   runs-on: ubuntu-latest
 
-    env:
-      AWS_DEFAULT_REGION: us-east-1
+   env:
+     AWS_DEFAULT_REGION: us-east-1
 
    steps:
-    - name: configureawscredentials
-      uses: aws-actions/configure-aws-credentials@v1
-      with:
-        role-to-assume: arn:aws:iam::133610437896:role/Github
-        role-session-name: github-actions
-        aws-region: ${{secrets.AWS_DEFAULT_REGION}}
-    - name: Checkout
-      uses: actions/checkout@v2
+   - name: configureawscredentials
+     uses: aws-actions/configure-aws-credentials@v1
+     with:
+       role-to-assume: arn:aws:iam::133610437896:role/Github
+       role-session-name: github-actions
+       aws-region: ${{secrets.AWS_DEFAULT_REGION}}
 
-    - name: Login to Amazon ECR
-      id: login-ecr
-      uses: aws-actions/amazon-ecr-login@v1
+   - name: Checkout
+     uses: actions/checkout@v2
 
-    - name: Automatic Tagging of Releases
-      id: increment-git-tag
-      run: |
-        bash ./build/git_update.sh -v major
-
-    - name: Build, Tag, and Push the Image to Amazon ECR
-      id: build-image
-      env:
-        ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
-        ECR_REPOSITORY: nestjs-template
-        IMAGE_TAG: ${{ steps.increment-git-tag.outputs.git-tag }}
-      run: |
-        docker build -t $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG .
-        docker push $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG
+   - name: Some AWS commands
+     run: 
+       aws --version
