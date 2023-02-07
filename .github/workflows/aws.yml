@@ -1,6 +1,6 @@
 name: Beelder-Deploy-Pipeline
 
-permissions: read-all|write-all
+permissions: write-all
 
 on: 
   push:
