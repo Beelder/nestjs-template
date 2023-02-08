@@ -54,7 +54,7 @@ jobs:
         with:
           task-definition: ${{ env.ECS_TASK_DEFINITION }}
           container-name: nestjs-template
-          image: ${{ steps.build-image.outputs.image }}
+          image: latest # ${{ steps.increment-git-tag.outputs.git-tag }}
 
       - name: Deploy Amazon ECS task definition
         uses: aws-actions/amazon-ecs-deploy-task-definition@v1
