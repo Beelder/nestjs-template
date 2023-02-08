@@ -12,6 +12,6 @@ export class AppController {
 
   @Get('/health')
   getHealth(): string {
-    return this.appService.getHello();
+    return "Esta funcionando el mani"
   }
 }
