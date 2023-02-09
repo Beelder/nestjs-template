@@ -8,12 +8,11 @@ on:
 
 env:
   AWS_REGION: ${{ secrets.AWS_DEFAULT_REGION }}   # set this to your preferred AWS region, e.g. us-west-1
-  ECR_REPOSITORY: nestjs-template                 # set this to your Amazon ECR repository name
-  ECS_SERVICE: beelder-service                    # set this to your Amazon ECS service name
-  ECS_CLUSTER: Beelder-Prod                       # set this to your Amazon ECS cluster name
+  ECR_REPOSITORY: nestjs-template-service-1       # set this to your Amazon ECR repository name
+  ECS_SERVICE: ${{ secrets.MAIN_SERVICE }}        # set this to your Amazon ECS service name
+  ECS_CLUSTER: ${{ secrets.MAIN_CLUSTER }}        # set this to your Amazon ECS cluster name
   ECS_TASK_DEFINITION: .aws/task-definition.json  # set this to the path to your Amazon ECS task definition
                                                   # file, e.g. .aws/task-definition.json
-  DATABASE_SOURCE: ${{ secrets.DATABASE_SOURCE }}
 jobs:
   pull_request:
     runs-on: ubuntu-latest
@@ -53,7 +52,7 @@ jobs:
         uses: aws-actions/amazon-ecs-render-task-definition@97587c9d45a4930bf0e3da8dd2feb2a463cf4a3a
         with:
           task-definition: ${{ env.ECS_TASK_DEFINITION }}
-          container-name: nestjs-template
+          container-name: ${{ env.ECR_REPOSITORY }}
           image: ${{ steps.build-image.outputs.image }}
 
       - name: Deploy Amazon ECS task definition
